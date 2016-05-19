@@ -1,0 +1,19 @@
+//
+//  Config.pch
+//  GJXMPP
+//
+//  Created by 郭佳 on 16/5/15.
+//  Copyright © 2016年 郭佳. All rights reserved.
+//
+
+#ifndef Config_pch
+#define Config_pch
+
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+#import "XMPPManager.h"
+
+#define RESOURCE @"iPhone"
+#define HOST @"127.0.0.1"
+
+#endif /* Config_pch */
