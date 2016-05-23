@@ -2,13 +2,18 @@
 //  ChatVC.m
 //  GJXMPP
 //
-//  Created by 郭佳 on 16/5/17.
+//  Created by 郭佳 on 16/5/19.
 //  Copyright © 2016年 郭佳. All rights reserved.
 //
 
 #import "ChatVC.h"
 
-@interface ChatVC ()
+@interface ChatVC ()<UITextViewDelegate,XMPPStreamDelegate,NSFetchedResultsControllerDelegate>
+@property (weak, nonatomic) IBOutlet UIView *inputView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+
+@property (strong, nonatomic) IBOutlet UIView *myView;
 
 @end
 
@@ -16,73 +21,102 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    // 监听键盘变化
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardChanged:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [[XMPPManager share].xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChanged) name:UIKeyboardDidChangeFrameNotification object:nil];
+}
+
+#pragma mark - ******************** 监听键盘弹出的方法
+- (void)keyboardChanged:(NSNotification *)notification {
+    // 先打印
+    // UIKeyboardFrameEndUserInfoKey ＝》将要变化的大小
+    CGRect keyboardRect = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    // 设置约束
+//    self.inputView. = ([UIScreen mainScreen].bounds.size.height - keyboardRect.origin.y);
+    
+    [self.inputView setFrame:CGRectMake(0, SCREEN_HEIGHT-266-44, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    
+    
+    
+    NSTimeInterval time = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    
+    [UIView animateWithDuration:time animations:^{
+        [self.view layoutIfNeeded];
+    }];
+    
+}
+
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        
+        NSString *str = textView.text;
+        
+        [self sendMessage:str];
+        
+        [textView resignFirstResponder];
+        return NO;
+    }
+    
+    
+    
+    return YES;
+}
+
+#pragma mark - ******************** 发送消息方法
+/** 发送信息 */
+- (void)sendMessage:(NSString *)message
+{
+//    XMPPJID *jid =[XMPPJID  jidWithUser:self.sendUserName domain:HOST resource:@"iPhone"];
+    
+    XMPPMessage *msg = [XMPPMessage messageWithType:@"chat" to:self.jid];
+    
+    [msg addBody:message];
+    
+    [[XMPPManager share].xmppStream sendElement:msg];
+}
+
+/** 发送二进制文件 */
+- (void)sendMessageWithData:(NSData *)data bodyName:(NSString *)name
+{
+    XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:[XMPPJID  jidWithUser:self.sendUserName domain:HOST resource:@"iPhone"]];
+    
+    [message addBody:name];
+    
+    // 转换成base64的编码
+    NSString *base64str = [data base64EncodedStringWithOptions:0];
+    
+    // 设置节点内容
+    XMPPElement *attachment = [XMPPElement elementWithName:@"attachment" stringValue:base64str];
+    
+    // 包含子节点
+    [message addChild:attachment];
+    
+    // 发送消息
+    [[XMPPManager share].xmppStream sendElement:message];
+}
+
+
+-(void) controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    
+}
+
+-(void) xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
+{
+    self.textView.text = message.body;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-    
-    return cell;
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 /*
 #pragma mark - Navigation

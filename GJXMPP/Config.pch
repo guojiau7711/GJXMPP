@@ -16,4 +16,7 @@
 #define RESOURCE @"iPhone"
 #define HOST @"127.0.0.1"
 
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+
 #endif /* Config_pch */

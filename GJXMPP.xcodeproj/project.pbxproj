@@ -19,7 +19,7 @@
 		B85A885B1CE9A35000D13F67 /* GJXMPPUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B85A885A1CE9A35000D13F67 /* GJXMPPUITests.m */; };
 		B85A88711CE9A58E00D13F67 /* XMPPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B85A886B1CE9A58E00D13F67 /* XMPPManager.m */; };
 		B85A88721CE9A58E00D13F67 /* FriendsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B85A886F1CE9A58E00D13F67 /* FriendsVC.m */; };
-		B85A88761CEB16F900D13F67 /* ChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B85A88751CEB16F900D13F67 /* ChatVC.m */; };
+		B87617F51CEDB68200F377A0 /* ChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B87617F41CEDB68200F377A0 /* ChatVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,8 +64,8 @@
 		B85A886E1CE9A58E00D13F67 /* FriendsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsVC.h; sourceTree = "<group>"; };
 		B85A886F1CE9A58E00D13F67 /* FriendsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsVC.m; sourceTree = "<group>"; };
 		B85A88731CE9A59B00D13F67 /* Config.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.pch; sourceTree = "<group>"; };
-		B85A88741CEB16F900D13F67 /* ChatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatVC.h; sourceTree = "<group>"; };
-		B85A88751CEB16F900D13F67 /* ChatVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatVC.m; sourceTree = "<group>"; };
+		B87617F31CEDB68200F377A0 /* ChatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatVC.h; sourceTree = "<group>"; };
+		B87617F41CEDB68200F377A0 /* ChatVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatVC.m; sourceTree = "<group>"; };
 		E49FF41FA63AD6C2D6638EB5 /* Pods-GJXMPP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GJXMPP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GJXMPP/Pods-GJXMPP.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -202,8 +202,8 @@
 			children = (
 				B85A886E1CE9A58E00D13F67 /* FriendsVC.h */,
 				B85A886F1CE9A58E00D13F67 /* FriendsVC.m */,
-				B85A88741CEB16F900D13F67 /* ChatVC.h */,
-				B85A88751CEB16F900D13F67 /* ChatVC.m */,
+				B87617F31CEDB68200F377A0 /* ChatVC.h */,
+				B87617F41CEDB68200F377A0 /* ChatVC.m */,
 			);
 			path = ViewControlers;
 			sourceTree = "<group>";
@@ -409,7 +409,7 @@
 				B85A883A1CE9A35000D13F67 /* LoginVC.m in Sources */,
 				B85A88711CE9A58E00D13F67 /* XMPPManager.m in Sources */,
 				B85A88401CE9A35000D13F67 /* GJXMPP.xcdatamodeld in Sources */,
-				B85A88761CEB16F900D13F67 /* ChatVC.m in Sources */,
+				B87617F51CEDB68200F377A0 /* ChatVC.m in Sources */,
 				B85A88371CE9A35000D13F67 /* AppDelegate.m in Sources */,
 				B85A88341CE9A35000D13F67 /* main.m in Sources */,
 			);

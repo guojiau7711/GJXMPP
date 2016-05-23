@@ -2,15 +2,17 @@
 //  ChatVC.h
 //  GJXMPP
 //
-//  Created by 郭佳 on 16/5/17.
+//  Created by 郭佳 on 16/5/19.
 //  Copyright © 2016年 郭佳. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ChatVC : UITableViewController
+@interface ChatVC : UIViewController
 
-@property (strong, nonatomic) NSString *sendUserName;
-@property (strong, nonatomic) NSString *jidStr;
+@property(nonatomic, strong) NSString *sendUserName;
+@property(nonatomic, strong) NSString *jidStr;
+@property(nonatomic, strong) XMPPJID *jid;
+
 
 @end
